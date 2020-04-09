@@ -15,11 +15,11 @@ export const successFetchingPaymentMethods = (paymentMethods) => ({
   payload: { paymentMethods },
 });
 
-export const fetchPaymentMethods = (lang) => {
+export const fetchPaymentMethods = (country_code) => {
   return async (dispatch) => {
     try {
       dispatch(startFetchingPaymentMethods());
-      const { data } = await Api.paymentMethods.fetch(lang);
+      const { data } = await Api.PaymentMethods.fetch(country_code);
       dispatch(successFetchingPaymentMethods(data));
     } catch (error) {
       dispatch(failFetchingPaymentMethods(error));

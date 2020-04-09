@@ -18,7 +18,7 @@ function paymentMethodsReducer(state = initial, action) {
         paymentMethods: action.payload.paymentMethods,
       };
     case actionTypes.FAIL_FETCHING_PAYMENT_METHODS:
-      return { ...state, error: action.payload.error };
+      return { ...state, loading: false, error: action.payload.error };
     default:
       return state;
   }

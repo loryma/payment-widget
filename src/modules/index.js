@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 
-import paymentMethods from "./paymentMethods";
+import paymentMethods, { fetchPaymentMethods } from "./paymentMethods";
+
+export { fetchPaymentMethods };
 
 export default combineReducers({ paymentMethods });
