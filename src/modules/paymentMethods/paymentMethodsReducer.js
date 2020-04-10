@@ -3,6 +3,7 @@ import * as actionTypes from "./paymentMethodsActionTypes";
 const initial = {
   loading: false,
   error: null,
+  currentMethod: { id: "cc", name: "credit card" },
   paymentMethods: [],
 };
 
@@ -11,14 +12,17 @@ function paymentMethodsReducer(state = initial, action) {
     case actionTypes.START_FETCHING_PAYMENT_METHODS:
       return { ...state, loading: true, error: null };
     case actionTypes.SUCCESS_FETCHING_PAYMENT_METHODS:
+      const paymentMethods = action.payload.paymentMethods || [];
       return {
         ...state,
         loading: false,
         error: false,
-        paymentMethods: action.payload.paymentMethods,
+        paymentMethods: paymentMethods,
       };
     case actionTypes.FAIL_FETCHING_PAYMENT_METHODS:
       return { ...state, loading: false, error: action.payload.error };
+    case actionTypes.SET_CURRENT_METHOD:
+      return { ...state, currentMethod: action.payload.method };
     default:
       return state;
   }

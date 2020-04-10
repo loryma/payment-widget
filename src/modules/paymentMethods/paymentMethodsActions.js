@@ -26,3 +26,8 @@ export const fetchPaymentMethods = (country_code) => {
     }
   };
 };
+
+export const setCurrentMethod = (method) => ({
+  type: actionTypes.SET_CURRENT_METHOD,
+  payload: { method },
+});

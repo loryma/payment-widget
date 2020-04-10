@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import * as actions from "modules";
 import PaymentMethodItem from "components/PaymentMethodItem";
 
-function PaymentMethods({ list = [] }) {
-  const [activeMethod, setActiveMethod] = useState("cc");
-
-  const changeActiveMethod = (id) => setActiveMethod(id);
+function PaymentMethods({ list = [], currentMethod, setCurrentMethod }) {
+  const changeActiveMethod = (id, name) => setCurrentMethod({ id, name });
   return (
     <div>
       {list.map(({ id, name, img_url }) => (
         <PaymentMethodItem
-          active={id === activeMethod}
-          onClick={changeActiveMethod.bind(undefined, id)}
+          active={id === currentMethod.id}
+          onClick={changeActiveMethod.bind(undefined, id, name)}
           key={id}
           src={img_url}
           name={name}
@@ -21,8 +20,15 @@ function PaymentMethods({ list = [] }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  list: state.paymentMethods.paymentMethods,
+const mapStateToProps = ({
+  paymentMethods: { paymentMethods, currentMethod },
+}) => ({
+  list: paymentMethods,
+  currentMethod,
 });
 
-export default connect(mapStateToProps)(PaymentMethods);
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentMethod: (method) => dispatch(actions.setCurrentMethod(method)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentMethods);

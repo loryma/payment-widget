@@ -1,8 +1,8 @@
 import React from "react";
 
-function PaymentMethodItem({ src, name }) {
+function PaymentMethodItem({ src, name, onClick }) {
   return (
-    <div>
+    <div onClick={onClick}>
       <img src={src} alt={name} />
       <h3>{name}</h3>
     </div>
