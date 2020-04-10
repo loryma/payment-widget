@@ -1,18 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import * as actions from "modules";
 import Input from "../Input";
+import Currency from "components/Currency";
 
-function Amount() {
-  const [value, setValue] = useState("");
-
-  const onChange = (e) => {
+function Amount({ setAmount, setCurrency, amount, currency }) {
+  const handleAmountChange = (e) => {
     const newValue = e.target.value;
-    setValue(newValue);
+    setAmount(newValue);
   };
+
+  const handleCurrencyChange = ({ value }) => {
+    setCurrency(value);
+  };
+
   return (
     <div>
-      <Input onChange={onChange} value={value} />
+      <Input onChange={handleAmountChange} value={amount} />
+      <Currency onChange={handleCurrencyChange} currency={currency} />
     </div>
   );
 }
 
-export default Amount;
+const mapStateToProps = ({ paymentSum: { amount, currency } }) => ({
+  amount,
+  currency,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setAmount: (amount) => dispatch(actions.setAmount(amount)),
+  setCurrency: (currency) => dispatch(actions.setCurrency(currency)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Amount);
