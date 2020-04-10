@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { getNameList, getCode } from "country-list";
 import { connect } from "react-redux";
 import * as actions from "modules";
+import { useCountry } from "utils";
 import Input from "components/Input";
 import CountryList from "components/CountriesList";
 
 const countryNames = Object.entries(getNameList());
 
 function Country({ updatePaymentMethods }) {
-  const [country, setCountry] = useState("Ukraine");
+  const [country, setCountry] = useCountry();
   const [list, setList] = useState();
   const [isActive, setIsActive] = useState();
 
