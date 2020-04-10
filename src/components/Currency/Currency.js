@@ -6,6 +6,27 @@ const list = data.map((el) => ({
   label: el.code,
 }));
 
+const inputStyles = {
+  color: "#fff",
+  backgroundColor: "transparent",
+  minWidth: "40px",
+};
+
+const controlStyles = {
+  backgroundColor: "transparent",
+  borderRadius: "0 4px 4px 0",
+};
+
+const singleValueStyles = {
+  color: "white",
+};
+
+const colourStyles = {
+  input: (styles) => ({ ...styles, ...inputStyles }),
+  control: (styles) => ({ ...styles, ...controlStyles }),
+  singleValue: (styles) => ({ ...styles, ...singleValueStyles }),
+};
+
 function Currency({ currency, onChange }) {
   return (
     <Select
@@ -13,6 +34,7 @@ function Currency({ currency, onChange }) {
       options={list}
       value={{ value: currency, label: currency }}
       isSearchable
+      styles={colourStyles}
     />
   );
 }

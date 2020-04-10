@@ -5,6 +5,8 @@ import * as actions from "modules";
 import { useCountry } from "utils";
 import Select from "react-select";
 
+import s from "./Country.module.scss";
+
 const countryNames = getNames().map((name) => ({
   value: capitalizeName(name),
   label: capitalizeName(name),
@@ -13,6 +15,32 @@ const countryNames = getNames().map((name) => ({
 function capitalizeName(name) {
   return name.replace(/\b(\w)/g, (s) => s.toUpperCase());
 }
+
+const inputStyles = {
+  color: "#fff",
+  backgroundColor: "transparent",
+  minWidth: "40px",
+};
+
+const controlStyles = {
+  backgroundColor: "transparent",
+  border: "none",
+};
+
+const containerStyles = {
+  flexGrow: "1",
+};
+
+const singleValueStyles = {
+  color: "white",
+};
+
+const colourStyles = {
+  input: (styles) => ({ ...styles, ...inputStyles }),
+  control: (styles) => ({ ...styles, ...controlStyles }),
+  container: (styles) => ({ ...styles, ...containerStyles }),
+  singleValue: (styles) => ({ ...styles, ...singleValueStyles }),
+};
 
 function Country({ updatePaymentMethods }) {
   const [country, setCountry] = useCountry();
@@ -31,16 +59,15 @@ function Country({ updatePaymentMethods }) {
   };
 
   return (
-    <div>
-      <h2>Country:</h2>
-      <div>
-        <Select
-          value={{ value: country, label: country }}
-          isSearchable
-          options={countryNames}
-          onChange={onChoice}
-        />
-      </div>
+    <div className={s.field}>
+      <label className={s.label}>Country</label>
+      <Select
+        value={{ value: country, label: country }}
+        isSearchable
+        options={countryNames}
+        onChange={onChoice}
+        styles={colourStyles}
+      />
     </div>
   );
 }

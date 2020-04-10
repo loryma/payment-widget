@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import { string, object } from "yup";
 import MaskedInput from "react-text-mask";
@@ -10,9 +10,12 @@ import {
   CARD_MASK,
   EXPIRATION_MASK,
 } from "utils";
+import Modal from "shared/Modal";
+import s from "./CreditCardForm.module.scss";
 
 function CreditCardForm({ amount, currency, submitForm }) {
   const submitText = `Pay ${amount} ${currency}`;
+  const [isOpen, setIsOpen] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -25,7 +28,7 @@ function CreditCardForm({ amount, currency, submitForm }) {
       cardholderName: string()
         .max(200, "Must be 200 characters or less")
         .min(2, "Must be at 2 characters or more")
-        .matches(/^([A-Za-z]|-)+$/, {
+        .matches(/^([A-Za-z]|-|\s)+$/, {
           message: "Name can contain only characters",
         })
         .required("Requered"),
@@ -54,77 +57,94 @@ function CreditCardForm({ amount, currency, submitForm }) {
         .required("Requered"),
     }),
     onSubmit: (values) => {
-      submitForm(values);
+      const formValues = { ...values, amount, currency };
+
+      submitForm(formValues).then(() => setIsOpen(true));
     },
   });
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div>
-        <label htmlFor="cardholderName">Cardholder name:</label>
-        <input
-          id="cardholderName"
-          name="cardholderName"
-          type="text"
-          placeholder="Card holder name"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.cardholderName}
-        />
-        {formik.touched.cardholderName && formik.errors.cardholderName ? (
-          <div>{formik.errors.cardholderName}</div>
-        ) : null}
-      </div>
-      <div>
-        <div>
-          <MaskedInput
-            mask={CARD_MASK}
-            guide={false}
-            id="cardNumber"
-            name="cardNumber"
-            type="text"
-            placeholder="Card number"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.cardNumber}
-          />
-          {formik.touched.cardNumber && formik.errors.cardNumber ? (
-            <div>{formik.errors.cardNumber}</div>
-          ) : null}
-        </div>
-        <div>
-          <MaskedInput
-            mask={EXPIRATION_MASK}
-            guide={false}
-            id="expDate"
-            name="expDate"
-            type="text"
-            placeholder="MM / YY"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.expDate}
-          />
-          {formik.touched.expDate && formik.errors.expDate ? (
-            <div>{formik.errors.expDate}</div>
-          ) : null}
-        </div>
-        <div>
+    <>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        modalClassName={s.modalContent}
+      >
+        <span onClick={() => setIsOpen(false)} className={s.close}>
+          &times;
+        </span>
+        <p className={s.modalMessage}>Card details successfully submitted</p>
+      </Modal>
+      <form onSubmit={formik.handleSubmit}>
+        <div className={s.field}>
+          <label className={s.label} htmlFor="cardholderName">
+            Name
+          </label>
           <input
-            id="cvv"
-            name="cvv"
+            id="cardholderName"
+            className={s.input}
+            name="cardholderName"
             type="text"
-            placeholder="CVC"
+            placeholder=""
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.cvv}
+            value={formik.values.cardholderName}
           />
-          {formik.touched.cvv && formik.errors.cvv ? (
-            <div>{formik.errors.cvv}</div>
+          {formik.touched.cardholderName && formik.errors.cardholderName ? (
+            <div className={s.error}>{formik.errors.cardholderName}</div>
           ) : null}
         </div>
-      </div>
+        <div>
+          <div>
+            <MaskedInput
+              mask={CARD_MASK}
+              guide={false}
+              id="cardNumber"
+              name="cardNumber"
+              type="text"
+              placeholder="Card number"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.cardNumber}
+            />
+            {formik.touched.cardNumber && formik.errors.cardNumber ? (
+              <div>{formik.errors.cardNumber}</div>
+            ) : null}
+          </div>
+          <div>
+            <MaskedInput
+              mask={EXPIRATION_MASK}
+              guide={false}
+              id="expDate"
+              name="expDate"
+              type="text"
+              placeholder="MM / YY"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.expDate}
+            />
+            {formik.touched.expDate && formik.errors.expDate ? (
+              <div>{formik.errors.expDate}</div>
+            ) : null}
+          </div>
+          <div>
+            <input
+              id="cvv"
+              name="cvv"
+              type="text"
+              placeholder="CVC"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.cvv}
+            />
+            {formik.touched.cvv && formik.errors.cvv ? (
+              <div>{formik.errors.cvv}</div>
+            ) : null}
+          </div>
+        </div>
 
-      <button type="submit">{submitText}</button>
-    </form>
+        <button type="submit">{submitText}</button>
+      </form>
+    </>
   );
 }
 

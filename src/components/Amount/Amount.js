@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as actions from "modules";
 import Input from "../Input";
 import Currency from "components/Currency";
+import s from "./Amount.module.scss";
 
 function Amount({ setAmount, setCurrency, amount, currency }) {
   const handleAmountChange = (e) => {
@@ -15,8 +16,14 @@ function Amount({ setAmount, setCurrency, amount, currency }) {
   };
 
   return (
-    <div>
-      <Input onChange={handleAmountChange} value={amount} />
+    <div className={s.field}>
+      <label className={s.label}>Amount</label>
+      <Input
+        placeholder=""
+        className={s.input}
+        onChange={handleAmountChange}
+        value={amount}
+      />
       <Currency onChange={handleCurrencyChange} currency={currency} />
     </div>
   );

@@ -1,0 +1,23 @@
+@import "ui-kit/components.scss";
+
+.field {
+  @extend %field;
+}
+
+.input {
+  border-radius: 4px 0 0 4px;
+  padding: 2px 8px;
+  flex-grow: 1;
+  background-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border-style: none;
+  color: white;
+  font-size: 16px;
+}
+
+.label {
+  @extend %label;
+}
