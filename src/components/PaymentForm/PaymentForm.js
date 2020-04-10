@@ -2,12 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import CreditCardForm from "components/CreditCardForm";
 
-function PaymentForm({ currency, amount, currentMethod }) {
+function PaymentForm({ currency, amount, currentMethod, loading }) {
   return (
     <>
-      <div>{currentMethod && currentMethod.name}</div>
+      <div>{!loading && currentMethod && currentMethod.name}</div>
       <div>
-        {currentMethod && (
+        {currentMethod && !loading && (
           <CreditCardForm amount={amount} currency={currency} />
         )}
       </div>
@@ -17,11 +17,12 @@ function PaymentForm({ currency, amount, currentMethod }) {
 
 const mapStateToProps = ({
   paymentSum: { amount, currency },
-  paymentMethods: { currentMethod },
+  paymentMethods: { currentMethod, loading },
 }) => ({
   currency,
   amount,
   currentMethod,
+  loading,
 });
 
 export default connect(mapStateToProps)(PaymentForm);
