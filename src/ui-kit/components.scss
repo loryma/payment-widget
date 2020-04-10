@@ -1,0 +1,35 @@
+%field {
+  margin: 16px 0;
+  padding: 0 0 0 16px;
+  border-style: none;
+  background-color: #7795f8;
+  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 #829fff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+%label {
+  width: 15%;
+  min-width: 70px;
+  color: #c4f0ff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  display: block;
+  min-height: 100%;
+}
+
+%error {
+  position: absolute;
+  top: calc(100% + 10px);
+  text-align: center;
+  background-color: #f6a4eb;
+  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 #ffb9f6;
+  color: white;
+  z-index: 1;
+}

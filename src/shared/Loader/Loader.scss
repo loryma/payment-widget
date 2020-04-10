@@ -1,0 +1,157 @@
+@keyframes bounce1_new {
+  0% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  20% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+
+  67% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce2_new {
+  0% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  16% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  36% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+
+  84% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce3_new {
+  0% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  32% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  53% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+
+  to {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+}
+
+.loader {
+  display: inline-block;
+  box-sizing: border-box;
+  position: relative;
+
+  &__contentWrapper {
+    transition: opacity 0.15s linear;
+
+    &_hidden {
+      opacity: 0.05;
+      // visibility: hidden;
+    }
+  }
+
+  &__loaderContainer {
+    display: flex;
+    margin: auto;
+    line-height: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    //padding: 3px;
+  }
+
+  &__ball {
+    &_1,
+    &_2,
+    &_3 {
+      width: 5px;
+      height: 5px;
+      margin: auto;
+      border-radius: 100%;
+      display: block;
+      opacity: 0.2;
+      transform: scale(1);
+      box-sizing: border-box;
+    }
+
+    &_1 {
+      background: #316f39;
+      animation: bounce1_new linear 1110ms infinite 0ms;
+    }
+
+    &_2 {
+      background: #b1ba1d;
+      animation: bounce2_new linear 1110ms infinite 0ms;
+    }
+
+    &_3 {
+      background: #dc2a39;
+      animation: bounce3_new linear 1110ms infinite 0ms;
+    }
+  }
+
+  &_color {
+    .loader {
+      &__ball {
+        &_1 {
+          background: #316f39;
+        }
+
+        &_2 {
+          background: #b1ba1d;
+        }
+
+        &_3 {
+          background: #dc2a39;
+        }
+      }
+    }
+  }
+
+  &_gray {
+    .loader {
+      &__ball {
+        &_1,
+        &_2,
+        &_3 {
+          background: #ccc;
+        }
+      }
+    }
+  }
+}
