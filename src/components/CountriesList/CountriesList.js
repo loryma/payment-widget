@@ -5,7 +5,9 @@ function CountriesList({ list, onChoice }) {
   return (
     <ul>
       {list.map(([name]) => (
-        <CountriesListItem onClick={onChoice}>{name}</CountriesListItem>
+        <CountriesListItem key={name} onClick={onChoice}>
+          {name}
+        </CountriesListItem>
       ))}
     </ul>
   );

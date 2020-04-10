@@ -4,6 +4,7 @@ function PaymentMethodItem({ src, name }) {
   return (
     <div>
       <img src={src} alt={name} />
+      <h3>{name}</h3>
     </div>
   );
 }

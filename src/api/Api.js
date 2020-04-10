@@ -10,3 +10,9 @@ export const PaymentMethods = {
     );
   },
 };
+
+export const GeolocateCountry = {
+  get() {
+    return axios.get("https://www.cloudflare.com/cdn-cgi/trace");
+  },
+};
