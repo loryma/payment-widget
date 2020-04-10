@@ -1,30 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { getNameList, getCode } from "country-list";
+import React, { useEffect } from "react";
+import { getCode, getNames } from "country-list";
 import { connect } from "react-redux";
 import * as actions from "modules";
 import { useCountry } from "utils";
-import Input from "components/Input";
-import CountryList from "components/CountriesList";
+import Select from "react-select";
 
-const countryNames = Object.entries(getNameList());
+const countryNames = getNames().map((name) => ({
+  value: capitalizeName(name),
+  label: capitalizeName(name),
+}));
+
+function capitalizeName(name) {
+  return name.replace(/\b(\w)/g, (s) => s.toUpperCase());
+}
 
 function Country({ updatePaymentMethods }) {
   const [country, setCountry] = useCountry();
-  const [list, setList] = useState();
-  const [isActive, setIsActive] = useState();
-
-  useEffect(() => {
-    let possibleCountries;
-    if (isActive && country) {
-      possibleCountries = countryNames.filter(([countryName]) =>
-        countryName.includes(country.toLowerCase())
-      );
-    } else {
-      possibleCountries = countryNames;
-    }
-
-    setList(possibleCountries);
-  }, [country, isActive]);
 
   useEffect(() => {
     if (country) {
@@ -35,28 +26,20 @@ function Country({ updatePaymentMethods }) {
     }
   }, [country]);
 
-  const handleFocus = () => setIsActive(true);
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setCountry(value);
-  };
-
-  const onChoice = (name) => {
-    setCountry(name);
+  const onChoice = ({ label }) => {
+    setCountry(label);
   };
 
   return (
     <div>
       <h2>Country:</h2>
       <div>
-        <Input
-          type="text"
-          value={country}
-          onFocus={handleFocus}
-          onChange={handleChange}
+        <Select
+          value={{ value: country, label: country }}
+          isSearchable
+          options={countryNames}
+          onChange={onChoice}
         />
-        {isActive && <CountryList list={list} onChoice={onChoice} />}
       </div>
     </div>
   );
