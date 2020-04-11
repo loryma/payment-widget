@@ -84,11 +84,7 @@ function CreditCardForm({ amount, currency, submitForm }) {
     ) : null;
 
   const formError =
-    cardNameError ||
-    cardNameError ||
-    cardNumberError ||
-    expDateError ||
-    cvvError;
+    cvvError || expDateError || cardNumberError || cardNameError;
 
   const submitDisabled = !currency || !amount || formError;
 
