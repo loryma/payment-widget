@@ -17,6 +17,9 @@
   border-style: none;
   color: white;
   font-size: 16px;
+  &:focus::placeholder {
+    opacity: 0;
+  }
 }
 
 .inputInvalid {

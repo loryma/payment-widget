@@ -1,13 +1,11 @@
 .item {
   padding: 4px;
-  opacity: 0.7;
   max-width: 90px;
   min-width: 70px;
   width: 30%;
   display: inline-block;
   box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 #829fff;
-  border-radius: 4px;
   background-color: rgba(4, 4, 5, 0.603);
   color: #fff;
   font-weight: 600;
@@ -20,7 +18,7 @@
   white-space: nowrap;
   &\--active,
   &:hover {
-    opacity: 1;
+    outline: 2px solid white;
   }
 }
 

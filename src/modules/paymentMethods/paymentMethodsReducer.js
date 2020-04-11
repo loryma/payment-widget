@@ -13,11 +13,13 @@ function paymentMethodsReducer(state = initial, action) {
       return { ...state, loading: true, error: null };
     case actionTypes.SUCCESS_FETCHING_PAYMENT_METHODS:
       const paymentMethods = action.payload.paymentMethods || [];
+      const currentMethod = paymentMethods[0] || state.currentMethod;
       return {
         ...state,
         loading: false,
         error: false,
-        paymentMethods: paymentMethods,
+        paymentMethods,
+        currentMethod,
       };
     case actionTypes.FAIL_FETCHING_PAYMENT_METHODS:
       return { ...state, loading: false, error: action.payload.error };

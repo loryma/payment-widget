@@ -13,10 +13,6 @@ function submitForm(values) {
 function PaymentForm({ currency, amount, currentMethod, loading }) {
   return (
     <>
-      <div className={s.currentMethod}>
-        method:{" "}
-        {!loading && currentMethod && currentMethod.name && currentMethod.name}
-      </div>
       <div>
         <CreditCardForm
           amount={amount}
