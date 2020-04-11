@@ -12,11 +12,11 @@ import {
 } from "utils";
 import Modal from "shared/Modal";
 import s from "./CreditCardForm.module.scss";
-import Amount from "components/Amount";
 
 function CreditCardForm({ amount, currency, submitForm }) {
   const submitText = amount ? `Pay ${amount} ${currency}` : "Pay";
   const [isOpen, setIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -58,43 +58,33 @@ function CreditCardForm({ amount, currency, submitForm }) {
         .required("CVC is required"),
     }),
     onSubmit: (values) => {
+      setIsSubmitting(true);
       if (formError) return;
+
+      if (inputsError) return;
+
       const formValues = { ...values, amount, currency };
 
       submitForm(formValues).then(() => setIsOpen(true));
     },
   });
 
-  const cardNameError =
-    formik.touched.cardholderName && formik.errors.cardholderName
-      ? formik.errors.cardholderName
-      : null;
-
-  const cardNumberError =
-    formik.touched.cardNumber && formik.errors.cardNumber
-      ? formik.errors.cardNumber
-      : null;
-
-  const expDateError =
-    formik.touched.expDate && formik.errors.expDate
-      ? formik.errors.expDate
-      : null;
-
-  const cvvError =
-    formik.touched.cvv && formik.errors.cvv ? formik.errors.cvv : null;
-
   const amountError = !amount.trim() ? "Amount is required" : null;
 
   const currencyError = !currency.trim() ? "Currency is required" : null;
 
-  const formError = [
-    cardNameError,
-    cardNumberError,
-    expDateError,
-    cvvError,
-    amountError,
-    currencyError,
-  ].reduce((acc, err) => (acc = acc || err), null);
+  let inputsError = [amountError, currencyError].reduce(
+    (acc, err) => (acc = acc || err),
+    null
+  );
+
+  let errorArray = Object.keys(formik.values).map((key) =>
+    formik.touched[key] && formik.errors[key] ? formik.errors[key] : null
+  );
+
+  let [cardNameError, cardNumberError, expDateError, cvvError] = errorArray;
+
+  const formError = errorArray.reduce((acc, err) => (acc = acc || err), null);
 
   return (
     <>
@@ -169,8 +159,12 @@ function CreditCardForm({ amount, currency, submitForm }) {
         <button className={s.button} type="submit">
           {submitText}
         </button>
-        <div className={`${s.error} ${formError ? s.errorVisible : ""}`}>
-          {formError}
+        <div
+          className={`${s.error} ${
+            formError || (isSubmitting && inputsError) ? s.errorVisible : ""
+          }`}
+        >
+          {formError || (isSubmitting && inputsError)}
         </div>
       </form>
     </>
