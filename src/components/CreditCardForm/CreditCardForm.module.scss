@@ -34,6 +34,9 @@
   &:placeholder {
     color: #87bbfd;
   }
+  // &:focus::placeholder {
+  //   opacity: 0;
+  // }
 }
 
 .inputInvalid {
@@ -114,6 +117,8 @@
   color: #fff;
   font-weight: 600;
   cursor: pointer;
+  font-size: 18px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 @media (min-width: 768px) {

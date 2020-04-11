@@ -8,7 +8,7 @@ import s from "./PaymentPage.module.scss";
 function PaymentPage() {
   return (
     <div>
-      <h1>Payments</h1>
+      <h1 className={s.title}>Payments</h1>
       <Amount />
 
       <Country />
