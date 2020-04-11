@@ -15,7 +15,7 @@ function PaymentMethods({
   return (
     <Loader active={loading}>
       <div className={s.container}>
-        <h2 className={s.header}>Choose your payment method</h2>
+        <h3 className={s.header}>Choose your payment method</h3>
         <div className={s.wrapper}>
           {list.map(({ id, name, img_url }) => (
             <PaymentMethodItem

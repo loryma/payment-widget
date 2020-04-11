@@ -12,6 +12,7 @@ import {
 } from "utils";
 import Modal from "shared/Modal";
 import s from "./CreditCardForm.module.scss";
+import Amount from "components/Amount";
 
 function CreditCardForm({ amount, currency, submitForm }) {
   const submitText = amount ? `Pay ${amount} ${currency}` : "Pay";
@@ -57,7 +58,7 @@ function CreditCardForm({ amount, currency, submitForm }) {
         .required("CVC is required"),
     }),
     onSubmit: (values) => {
-      if (submitDisabled) return;
+      if (formError) return;
       const formValues = { ...values, amount, currency };
 
       submitForm(formValues).then(() => setIsOpen(true));
@@ -70,28 +71,30 @@ function CreditCardForm({ amount, currency, submitForm }) {
       : null;
 
   const cardNumberError =
-    formik.touched.cardNumber && formik.errors.cardNumber ? (
-      <div>{formik.errors.cardNumber}</div>
-    ) : null;
+    formik.touched.cardNumber && formik.errors.cardNumber
+      ? formik.errors.cardNumber
+      : null;
 
   const expDateError =
-    formik.touched.expDate && formik.errors.expDate ? (
-      <div>{formik.errors.expDate}</div>
-    ) : null;
+    formik.touched.expDate && formik.errors.expDate
+      ? formik.errors.expDate
+      : null;
 
   const cvvError =
-    formik.touched.cvv && formik.errors.cvv ? (
-      <div>{formik.errors.cvv}</div>
-    ) : null;
+    formik.touched.cvv && formik.errors.cvv ? formik.errors.cvv : null;
+
+  const amountError = !amount.trim() ? "Amount is required" : null;
+
+  const currencyError = !currency.trim() ? "Currency is required" : null;
 
   const formError = [
     cardNameError,
     cardNumberError,
     expDateError,
     cvvError,
+    amountError,
+    currencyError,
   ].reduce((acc, err) => (acc = acc || err), null);
-
-  const submitDisabled = !currency || !amount || formError;
 
   return (
     <>
@@ -100,9 +103,6 @@ function CreditCardForm({ amount, currency, submitForm }) {
         onClose={() => setIsOpen(false)}
         modalClassName={s.modalContent}
       >
-        <span onClick={() => setIsOpen(false)} className={s.close}>
-          &times;
-        </span>
         <p className={s.modalMessage}>Card details successfully submitted</p>
       </Modal>
       <form className={s.form} onSubmit={formik.handleSubmit}>
@@ -155,6 +155,7 @@ function CreditCardForm({ amount, currency, submitForm }) {
           />
           <input
             id="cvv"
+            type="number"
             name="cvv"
             className={`${s.input} ${s.cvv} ${cvvError ? s.inputInvalid : ""}`}
             type="text"

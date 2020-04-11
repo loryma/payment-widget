@@ -1,6 +1,6 @@
 import * as actionTypes from "./paymentSumActionTypes";
 
-const initial = { amount: "", currency: "USD" };
+const initial = { amount: "", currency: "USD", validate: false };
 
 function paymentSumReducer(state = initial, action) {
   switch (action.type) {
