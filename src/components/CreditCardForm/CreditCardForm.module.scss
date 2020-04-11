@@ -11,6 +11,7 @@
 .input {
   border-radius: 0 4px 4px 0;
   padding: 2px 8px;
+  width: 50%;
   flex-grow: 1;
   background-color: transparent;
   -webkit-appearance: none;
@@ -30,14 +31,20 @@
   }
 }
 
+.inputInvalid {
+  color: #ffc7ee;
+  border-color: #ffc7ee;
+}
+
 .cardNumber {
   border-radius: 4px;
+  padding: 2px 0;
 }
 
 .expDate {
   border-radius: 4px;
   flex-grow: 0;
-  width: 20%;
+  width: 25%;
 }
 
 .cvv {
@@ -52,10 +59,17 @@
 
 .error {
   @extend %error;
+  &:after {
+    position: absolute;
+    top: 1px;
+    transform: translateX(-50%);
+    left: 12px;
+    content: url("./Error.svg");
+  }
 }
 
 .errorVisible {
-  transform: 0;
+  transform: translateX(-50%);
   opacity: 1;
 }
 
@@ -87,12 +101,22 @@
   display: block;
   width: 100%;
   height: 40px;
-  margin: 40px 0 0 0;
-  background-color: #5cb85c;
+  margin: 48px 0 0 0;
+  background-color: #125e12;
   box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 #5cb85c;
+    inset 0 1px 0 #125e12;
   border-radius: 4px;
   color: #fff;
   font-weight: 600;
   cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .expDate {
+    width: 20%;
+  }
+
+  .cvv {
+    width: 20%;
+  }
 }

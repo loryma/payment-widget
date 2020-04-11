@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import CreditCardForm from "components/CreditCardForm";
+import s from "./PaymentForm.module.scss";
 
 function submitForm(values) {
   return new Promise(function (resolve, reject) {
@@ -12,15 +13,16 @@ function submitForm(values) {
 function PaymentForm({ currency, amount, currentMethod, loading }) {
   return (
     <>
-      <div>{!loading && currentMethod && currentMethod.name}</div>
+      <div className={s.currentMethod}>
+        method:{" "}
+        {!loading && currentMethod && currentMethod.name && currentMethod.name}
+      </div>
       <div>
-        {currentMethod && !loading && (
-          <CreditCardForm
-            amount={amount}
-            currency={currency}
-            submitForm={submitForm}
-          />
-        )}
+        <CreditCardForm
+          amount={amount}
+          currency={currency}
+          submitForm={submitForm}
+        />
       </div>
     </>
   );

@@ -19,7 +19,7 @@ function Amount({ setAmount, setCurrency, amount, currency }) {
     <div className={s.field}>
       <label className={s.label}>Amount</label>
       <Input
-        placeholder=""
+        placeholder="100"
         className={s.input}
         onChange={handleAmountChange}
         value={amount}

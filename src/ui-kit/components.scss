@@ -7,12 +7,13 @@
     inset 0 1px 0 #829fff;
   border-radius: 4px;
   display: flex;
+  justify-items: space-between;
   align-items: center;
   position: relative;
 }
 
 %label {
-  width: 15%;
+  width: 10%;
   min-width: 70px;
   color: #c4f0ff;
   overflow: hidden;
@@ -25,19 +26,20 @@
 
 %error {
   position: absolute;
+  white-space: nowrap;
   display: inline-block;
   margin-left: auto;
   border-radius: 4px;
   text-align: center;
   background-color: #7795f8;
-  color: #f5bced;
+  color: #c92828;
   z-index: 1;
-  margin-top: 20px;
-  left: 0;
-  padding: 0 15px;
+  bottom: 54px;
+  left: 50%;
+  padding: 2px 15px 2px 25px;
   font-size: 13px !important;
   opacity: 0;
-  transform: translateY(10px);
+  transform: translate(-50%, 10px);
   transition-property: opacity, transform;
   transition-duration: 0.35s;
   transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);

@@ -1,11 +1,12 @@
 import React from "react";
 import s from "./PaymentMethodItem.module.scss";
 
-function PaymentMethodItem({ src, name, onClick }) {
+function PaymentMethodItem({ src, name, onClick, active }) {
+  const itemClasses = [s.item, active ? s["item--active"] : ""].join(" ");
   return (
-    <div className={s.item} onClick={onClick}>
+    <div className={itemClasses} onClick={onClick}>
       <img src={src} alt={name} />
-      <h3>{name}</h3>
+      <h3 className={s.name}>{name}</h3>
     </div>
   );
 }

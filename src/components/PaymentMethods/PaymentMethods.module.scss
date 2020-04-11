@@ -12,3 +12,9 @@
 .header {
   color: white;
 }
+
+@media (min-width: 768px) {
+  .container {
+    padding: 3em 0;
+  }
+}

@@ -57,6 +57,7 @@ function CreditCardForm({ amount, currency, submitForm }) {
         .required("CVC is required"),
     }),
     onSubmit: (values) => {
+      if (submitDisabled) return;
       const formValues = { ...values, amount, currency };
 
       submitForm(formValues).then(() => setIsOpen(true));
@@ -83,8 +84,12 @@ function CreditCardForm({ amount, currency, submitForm }) {
       <div>{formik.errors.cvv}</div>
     ) : null;
 
-  const formError =
-    cvvError || expDateError || cardNumberError || cardNameError;
+  const formError = [
+    cardNameError,
+    cardNumberError,
+    expDateError,
+    cvvError,
+  ].reduce((acc, err) => (acc = acc || err), null);
 
   const submitDisabled = !currency || !amount || formError;
 
@@ -102,15 +107,18 @@ function CreditCardForm({ amount, currency, submitForm }) {
       </Modal>
       <form className={s.form} onSubmit={formik.handleSubmit}>
         <div className={s.field}>
-          <label className={s.label} htmlFor="cardholderName">
+          <label
+            className={`${s.label} ${cardNameError ? s.inputInvalid : ""}`}
+            htmlFor="cardholderName"
+          >
             Name
           </label>
           <input
             id="cardholderName"
-            className={s.input}
+            className={`${s.input} ${cardNameError ? s.inputInvalid : ""}`}
             name="cardholderName"
             type="text"
-            placeholder=""
+            placeholder="Jane Doe"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.cardholderName}
@@ -122,7 +130,9 @@ function CreditCardForm({ amount, currency, submitForm }) {
             guide={false}
             id="cardNumber"
             name="cardNumber"
-            className={`${s.input} ${s.cardNumber}`}
+            className={`${s.input} ${s.cardNumber} ${
+              cardNumberError ? s.inputInvalid : ""
+            }`}
             type="text"
             placeholder="Card number"
             onChange={formik.handleChange}
@@ -134,7 +144,9 @@ function CreditCardForm({ amount, currency, submitForm }) {
             guide={false}
             id="expDate"
             name="expDate"
-            className={`${s.input} ${s.expDate}`}
+            className={`${s.input} ${s.expDate} ${
+              expDateError ? s.inputInvalid : ""
+            }`}
             type="text"
             placeholder="MM / YY"
             onChange={formik.handleChange}
@@ -144,7 +156,7 @@ function CreditCardForm({ amount, currency, submitForm }) {
           <input
             id="cvv"
             name="cvv"
-            className={`${s.input} ${s.cvv}`}
+            className={`${s.input} ${s.cvv} ${cvvError ? s.inputInvalid : ""}`}
             type="text"
             placeholder="CVC"
             onChange={formik.handleChange}

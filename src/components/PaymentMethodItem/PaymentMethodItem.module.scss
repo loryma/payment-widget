@@ -1,22 +1,33 @@
 .item {
-  padding: 4px 4px 2px 4px;
-  max-width: 80px;
+  padding: 4px;
+  opacity: 0.7;
+  max-width: 90px;
+  min-width: 70px;
+  width: 30%;
   display: inline-block;
   box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 #829fff;
   border-radius: 4px;
-  background-color: #2b47b2;
+  background-color: rgba(4, 4, 5, 0.603);
   color: #fff;
   font-weight: 600;
   font-size: 12px;
   cursor: pointer;
   text-align: center;
-  color: #c4f0ff;
+  color: #c4f0ff93;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  &\--active,
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .item + .item {
   margin-left: 8px;
+}
+
+.name {
+  margin-top: 8px;
 }
