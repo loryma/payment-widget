@@ -12,27 +12,37 @@ function PaymentMethods({
   loading,
 }) {
   const changeActiveMethod = (id, name) => setCurrentMethod({ id, name });
+  let methodsContent;
 
-  const listOfMethods = list.map(({ id, name, img_url }) => (
-    <PaymentMethodItem
-      active={id === currentMethod.id}
-      onClick={changeActiveMethod.bind(undefined, id, name)}
-      key={id}
-      src={img_url}
-      name={name}
-    />
-  ));
+  const listOfMethods =
+    list &&
+    list.map(({ id, name, img_url }) => (
+      <PaymentMethodItem
+        active={id === currentMethod.id}
+        onClick={changeActiveMethod.bind(undefined, id, name)}
+        key={id}
+        src={img_url}
+        name={name}
+      />
+    ));
 
-  const methodsContent =
-    list.length > 0 && !loading ? listOfMethods : "No methods for this country";
+  if (list && list.length > 0 && !loading) {
+    methodsContent = listOfMethods;
+  } else if (!loading && !list) {
+    methodsContent = (
+      <p className={s.methodsNotFound}>No methods for this country</p>
+    );
+  } else {
+    methodsContent = [];
+  }
 
   return (
-    <Loader active={loading}>
-      <div className={s.container}>
-        <h3 className={s.header}>Choose your payment method</h3>
+    <div className={s.container}>
+      <h3 className={s.header}>Choose your payment method</h3>
+      <Loader active={loading} grey style={{ maxWidth: "60px" }}>
         <div className={s.wrapper}>{methodsContent}</div>
-      </div>
-    </Loader>
+      </Loader>
+    </div>
   );
 }
 

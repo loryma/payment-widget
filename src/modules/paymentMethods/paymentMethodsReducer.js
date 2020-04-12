@@ -12,8 +12,10 @@ function paymentMethodsReducer(state = initial, action) {
     case actionTypes.START_FETCHING_PAYMENT_METHODS:
       return { ...state, loading: true, error: null };
     case actionTypes.SUCCESS_FETCHING_PAYMENT_METHODS:
-      const paymentMethods = action.payload.paymentMethods || [];
-      const currentMethod = paymentMethods[0] || state.currentMethod;
+      const paymentMethods = action.payload.paymentMethods;
+      const currentMethod = paymentMethods
+        ? paymentMethods[0]
+        : state.currentMethod;
       return {
         ...state,
         loading: false,
