@@ -11,7 +11,10 @@ function useCountry() {
         const countryName = getName(countryCode);
         if (countryName) setCountry(countryName);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e);
+        setCountry("United States of America");
+      });
   }, []);
   return [country, setCountry];
 }

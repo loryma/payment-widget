@@ -60,8 +60,11 @@ function Country({ updatePaymentMethods }) {
 
   return (
     <div className={s.field}>
-      <label className={s.label}>Country</label>
+      <label htmlFor="paymentCountry" className={s.label}>
+        Country
+      </label>
       <Select
+        id="paymentCountry"
         value={{ value: country, label: country }}
         isSearchable
         options={countryNames}

@@ -24,11 +24,15 @@ function Amount({ setAmount, setCurrency, amount, currency }) {
 
   return (
     <div className={s.field}>
-      <label className={`${s.label} ${amountIsInvalid ? s.inputInvalid : ""}`}>
+      <label
+        htmlFor="paymentAmount"
+        className={`${s.label} ${amountIsInvalid ? s.inputInvalid : ""}`}
+      >
         Amount
       </label>
       <Input
         placeholder="100"
+        id="paymentAmount"
         type="number"
         className={s.input}
         onBlur={onBlur}

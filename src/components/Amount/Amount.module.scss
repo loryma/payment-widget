@@ -20,6 +20,7 @@
   &:focus::placeholder {
     opacity: 0;
   }
+  @extend %input;
 }
 
 .inputInvalid {
