@@ -1,4 +1,5 @@
 import axios from "axios";
+axios.defaults.timeout = 10000;
 const PAYMENT_METHODS_ENDPOINT =
   "https://api.paymentwall.com/api/payment-systems";
 // const PROJECT_KEY = "f11e59e17b423ecd3454ed5fccd5e82d";
